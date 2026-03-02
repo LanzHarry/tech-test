@@ -6,7 +6,7 @@
 #include <sstream>
 #include <stdexcept>
 
-BondTrade *BondTradeLoader::createTradeFromLine(std::string line) {
+BondTrade *BondTradeLoader::createTradeFromLine(std::string &line) {
     std::vector<std::string> items;
     std::stringstream ss(line);
     std::string item;
