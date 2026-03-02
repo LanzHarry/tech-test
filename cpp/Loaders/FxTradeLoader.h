@@ -13,7 +13,7 @@ class FxTradeLoader : public ITradeLoader {
   public:
     // NOTE: These methods are only here to allow the solution to compile prior to the test being
     // completed.
-    std::vector<ITrade *> loadTrades() override;
+    std::vector<ITrade *> loadTrades() const override;
     std::string getDataFile() const override;
     void setDataFile(const std::string &file) override;
 };

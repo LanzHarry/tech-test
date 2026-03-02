@@ -8,7 +8,7 @@
 class ITradeLoader {
   public:
     virtual ~ITradeLoader() = default;
-    virtual std::vector<ITrade *> loadTrades() = 0;
+    virtual std::vector<ITrade *> loadTrades() const = 0;
     virtual std::string getDataFile() const = 0;
     virtual void setDataFile(const std::string &file) = 0;
 };

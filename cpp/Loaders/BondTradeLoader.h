@@ -13,11 +13,11 @@ class BondTradeLoader : public ITradeLoader {
     static constexpr char separator = ',';
     std::string dataFile_;
 
-    static BondTrade *createTradeFromLine(std::string &line);
-    void loadTradesFromFile(std::string filename, BondTradeList &tradeList);
+    BondTrade *createTradeFromLine(const std::string &line) const;
+    void loadTradesFromFile(const std::string &filename, std::vector<ITrade *> &out) const;
 
   public:
-    std::vector<ITrade *> loadTrades() override;
+    std::vector<ITrade *> loadTrades() const override;
     std::string getDataFile() const override;
     void setDataFile(const std::string &file) override;
 };
