@@ -3,7 +3,7 @@
 
 ScalarResults::~ScalarResults() = default;
 
-std::optional<ScalarResult> ScalarResults::operator[](const std::string& tradeId) const {
+std::optional<ScalarResult> ScalarResults::operator[](const std::string &tradeId) const {
     if (!containsTrade(tradeId)) {
         return std::nullopt;
     }
@@ -24,19 +24,19 @@ std::optional<ScalarResult> ScalarResults::operator[](const std::string& tradeId
     return ScalarResult(tradeId, priceResult, error);
 }
 
-bool ScalarResults::containsTrade(const std::string& tradeId) const {
+bool ScalarResults::containsTrade(const std::string &tradeId) const {
     return results_.find(tradeId) != results_.end() || errors_.find(tradeId) != errors_.end();
 }
 
-void ScalarResults::addResult(const std::string& tradeId, double result) {
+void ScalarResults::addResult(const std::string &tradeId, double result) {
     results_[tradeId] = result;
 }
 
-void ScalarResults::addError(const std::string& tradeId, const std::string& error) {
+void ScalarResults::addError(const std::string &tradeId, const std::string &error) {
     errors_[tradeId] = error;
 }
 
-ScalarResults::Iterator& ScalarResults::Iterator::operator++() {
+ScalarResults::Iterator &ScalarResults::Iterator::operator++() {
     throw std::runtime_error("Iterator not implemented");
 }
 
@@ -44,7 +44,7 @@ ScalarResult ScalarResults::Iterator::operator*() const {
     throw std::runtime_error("Iterator not implemented");
 }
 
-bool ScalarResults::Iterator::operator!=(const Iterator& other) const {
+bool ScalarResults::Iterator::operator!=(const Iterator &other) const {
     throw std::runtime_error("Iterator not implemented");
 }
 

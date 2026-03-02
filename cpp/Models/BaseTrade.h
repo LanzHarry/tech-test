@@ -6,32 +6,54 @@
 #include <string>
 
 class BaseTrade : public ITrade {
-public:
+  public:
     BaseTrade() = default;
     virtual ~BaseTrade() = default;
-    
-    std::chrono::system_clock::time_point getTradeDate() const override { return tradeDate_; }
-    void setTradeDate(const std::chrono::system_clock::time_point& date) override { tradeDate_ = date; }
-    
-    std::string getInstrument() const override { return instrument_; }
-    void setInstrument(const std::string& instrument) override { instrument_ = instrument; }
-    
-    std::string getCounterparty() const override { return counterparty_; }
-    void setCounterparty(const std::string& counterparty) override { counterparty_ = counterparty; }
-    
-    double getNotional() const override { return notional_; }
-    void setNotional(double notional) override { notional_ = notional; }
-    
-    double getRate() const override { return rate_; }
-    void setRate(double rate) override { rate_ = rate; }
-    
+
+    std::chrono::system_clock::time_point getTradeDate() const override {
+        return tradeDate_;
+    }
+    void setTradeDate(const std::chrono::system_clock::time_point &date) override {
+        tradeDate_ = date;
+    }
+
+    std::string getInstrument() const override {
+        return instrument_;
+    }
+    void setInstrument(const std::string &instrument) override {
+        instrument_ = instrument;
+    }
+
+    std::string getCounterparty() const override {
+        return counterparty_;
+    }
+    void setCounterparty(const std::string &counterparty) override {
+        counterparty_ = counterparty;
+    }
+
+    double getNotional() const override {
+        return notional_;
+    }
+    void setNotional(double notional) override {
+        notional_ = notional;
+    }
+
+    double getRate() const override {
+        return rate_;
+    }
+    void setRate(double rate) override {
+        rate_ = rate;
+    }
+
     std::string getTradeType() const override = 0;
-    std::string getTradeId() const override { return tradeId_; }
-    
-protected:
+    std::string getTradeId() const override {
+        return tradeId_;
+    }
+
+  protected:
     std::string tradeId_;
-    
-private:
+
+  private:
     std::chrono::system_clock::time_point tradeDate_;
     std::string instrument_;
     std::string counterparty_;
@@ -40,4 +62,3 @@ private:
 };
 
 #endif // BASETRADE_H
-

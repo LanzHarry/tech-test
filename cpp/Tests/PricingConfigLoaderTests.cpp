@@ -1,11 +1,11 @@
-#include "TestFramework.h"
-#include "../RiskSystem/PricingConfigLoader.h"
-#include "../RiskSystem/PricingEngineConfig.h"
 #include "../Models/BondTrade.h"
 #include "../Models/FxTrade.h"
+#include "../RiskSystem/PricingConfigLoader.h"
+#include "../RiskSystem/PricingEngineConfig.h"
+#include "TestFramework.h"
 #include <memory>
 
-static PricingEngineConfig* config = nullptr;
+static PricingEngineConfig *config = nullptr;
 
 void setUpConfig() {
     PricingConfigLoader loader;
@@ -21,7 +21,7 @@ TEST(TestConfigItemCount) {
 TEST(TestFirstConfigMapping) {
     setUpConfig();
     auto configItem = (*config)[0];
-    
+
     ASSERT_EQ(configItem.getTradeType(), BondTrade::GovBondTradeType);
     ASSERT_EQ(configItem.getTypeName(), "HmxLabs.TechTest.Pricers.GovBondPricingEngine");
     ASSERT_EQ(configItem.getAssembly(), "HmxLabs.TechTest.Pricers");
@@ -34,4 +34,3 @@ TEST(TestLastConfigMapping) {
     ASSERT_EQ(configItem.getTypeName(), "HmxLabs.TechTest.Pricers.FxPricingEngine");
     ASSERT_EQ(configItem.getAssembly(), "HmxLabs.TechTest.Pricers");
 }
-

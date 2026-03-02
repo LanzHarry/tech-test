@@ -4,8 +4,8 @@
 #include "../Models/ScalarResults.h"
 
 class ScreenResultPrinter {
-public:
-    void printResults(ScalarResults& results);
+  public:
+    void printResults(ScalarResults &results);
 };
 
 #endif // SCREENRESULTPRINTER_H

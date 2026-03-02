@@ -4,9 +4,8 @@
 #include "TradeList.h"
 
 class BondTradeList : public TradeList {
-public:
+  public:
     BondTradeList() = default;
 };
 
 #endif // BONDTRADELIST_H
-

@@ -4,7 +4,7 @@
 #include "BasePricingEngine.h"
 
 class FxPricingEngine : public BasePricingEngine {
-public:
+  public:
     FxPricingEngine() {
         setDelay(2000);
         addSupportedTradeType("FxSpot");
@@ -13,4 +13,3 @@ public:
 };
 
 #endif // FXPRICINGENGINE_H
-

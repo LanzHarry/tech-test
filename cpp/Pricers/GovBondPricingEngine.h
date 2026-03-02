@@ -4,7 +4,7 @@
 #include "BasePricingEngine.h"
 
 class GovBondPricingEngine : public BasePricingEngine {
-public:
+  public:
     GovBondPricingEngine() {
         setDelay(5000);
         addSupportedTradeType("GovBond");
@@ -12,4 +12,3 @@ public:
 };
 
 #endif // GOVBONDPRICINGENGINE_H
-

@@ -4,7 +4,7 @@
 #include "BasePricingEngine.h"
 
 class CorpBondPricingEngine : public BasePricingEngine {
-public:
+  public:
     CorpBondPricingEngine() {
         setDelay(8000);
         addSupportedTradeType("CorpBond");
@@ -12,4 +12,3 @@ public:
 };
 
 #endif // CORPBONDPRICINGENGINE_H
-

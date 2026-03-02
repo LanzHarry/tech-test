@@ -5,7 +5,7 @@ std::string PricingConfigLoader::getConfigFile() const {
     return configFile_;
 }
 
-void PricingConfigLoader::setConfigFile(const std::string& file) {
+void PricingConfigLoader::setConfigFile(const std::string &file) {
     configFile_ = file;
 }
 

@@ -5,13 +5,13 @@
 #include <string>
 
 class PricingConfigLoader {
-private:
+  private:
     std::string configFile_;
-    PricingEngineConfig parseXml(const std::string& content);
-    
-public:
+    PricingEngineConfig parseXml(const std::string &content);
+
+  public:
     std::string getConfigFile() const;
-    void setConfigFile(const std::string& file);
+    void setConfigFile(const std::string &file);
     PricingEngineConfig loadConfig();
 };
 

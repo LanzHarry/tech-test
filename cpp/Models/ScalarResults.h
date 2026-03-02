@@ -3,43 +3,43 @@
 
 #include "IScalarResultReceiver.h"
 #include "ScalarResult.h"
+#include <iterator>
 #include <map>
-#include <vector>
 #include <optional>
 #include <string>
-#include <iterator>
+#include <vector>
 
 class ScalarResults : public IScalarResultReceiver {
-public:
+  public:
     virtual ~ScalarResults();
-    std::optional<ScalarResult> operator[](const std::string& tradeId) const;
+    std::optional<ScalarResult> operator[](const std::string &tradeId) const;
 
-    bool containsTrade(const std::string& tradeId) const;
+    bool containsTrade(const std::string &tradeId) const;
 
-    virtual void addResult(const std::string& tradeId, double result) override;
+    virtual void addResult(const std::string &tradeId, double result) override;
 
-    virtual void addError(const std::string& tradeId, const std::string& error) override;
+    virtual void addError(const std::string &tradeId, const std::string &error) override;
 
     class Iterator {
-    public:
+      public:
         using iterator_category = std::forward_iterator_tag;
         using value_type = ScalarResult;
         using difference_type = std::ptrdiff_t;
-        using pointer = ScalarResult*;
-        using reference = ScalarResult&;
+        using pointer = ScalarResult *;
+        using reference = ScalarResult &;
 
         Iterator() = default;
 
         // Iterator must be constructable from ScalarResults parent
-        Iterator& operator++();
+        Iterator &operator++();
         ScalarResult operator*() const;
-        bool operator!=(const Iterator& other) const;
+        bool operator!=(const Iterator &other) const;
     };
 
     Iterator begin() const;
     Iterator end() const;
 
-private:
+  private:
     std::map<std::string, double> results_;
     std::map<std::string, std::string> errors_;
 };

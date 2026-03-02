@@ -4,10 +4,9 @@
 #include "ITrade.h"
 
 class ITradeReceiver {
-public:
+  public:
     virtual ~ITradeReceiver() = default;
-    virtual void add(ITrade* trade) = 0;
+    virtual void add(ITrade *trade) = 0;
 };
 
 #endif // ITRADERECEIVER_H
-
