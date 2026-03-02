@@ -4,6 +4,23 @@ project(TechTest)
 # Default to C++17, but candidates may change to 20 or 23 if preferred
 set(CMAKE_CXX_STANDARD 17)
 
+# Export compile_commands.json for clangd
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+option(ENABLE_SANITIZERS "Enable ASan/UBSan" OFF)
+
+if (ENABLE_SANITIZERS)
+    if (CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
+        add_compile_options(-fno-omit-frame-pointer -g)
+        add_link_options(-fno-omit-frame-pointer)
+
+        add_compile_options(-fsanitize=address,undefined)
+        add_link_options(-fsanitize=address,undefined)
+    else()
+        message(WARNING "Sanitizers not supported for this compiler.")
+    endif()
+endif()
+
 # Models library
 # Make Models a static library so translation-unit implementations
 # (e.g. ScalarResults.cpp) are compiled and linked.
