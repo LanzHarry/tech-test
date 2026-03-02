@@ -9,6 +9,19 @@ class TradeList : public ITradeReceiver {
   public:
     TradeList() = default;
 
+    ~TradeList() {
+        for (auto *tradeElt : trades_) {
+            delete tradeElt;
+        }
+    };
+
+    // delete copy and move constructors
+    TradeList(const TradeList &) = delete;
+    TradeList &operator=(const TradeList &) = delete;
+
+    TradeList(TradeList &&) noexcept = default;
+    TradeList &operator=(TradeList &&) noexcept = default;
+
     void add(ITrade *trade) override {
         trades_.push_back(trade);
     }

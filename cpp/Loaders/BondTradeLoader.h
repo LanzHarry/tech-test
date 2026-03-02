@@ -2,9 +2,9 @@
 #define BONDTRADELOADER_H
 
 #include "../Models/BondTrade.h"
-#include "../Models/BondTradeList.h"
+// #include "../Models/BondTradeList.h" // using BondTradeList removed to avoid use after free
 #include "ITradeLoader.h"
-#include <memory>
+// #include <memory>
 #include <string>
 #include <vector>
 
