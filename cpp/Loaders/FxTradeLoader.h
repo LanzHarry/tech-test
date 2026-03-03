@@ -2,20 +2,17 @@
 #define FXTRADELOADER_H
 
 #include "../Models/FxTrade.h"
-#include "ITradeLoader.h"
+#include "BaseTradeLoader.h"
 #include <string>
 #include <vector>
 
-class FxTradeLoader : public ITradeLoader {
+class FxTradeLoader : public BaseTradeLoader {
   private:
-    std::string dataFile_;
+    static constexpr const char *separator = "\xC2\xAC"; // UTF-8 encoding of ¬
 
-  public:
-    // NOTE: These methods are only here to allow the solution to compile prior to the test being
-    // completed.
-    std::vector<ITrade *> loadTrades() const override;
-    std::string getDataFile() const override;
-    void setDataFile(const std::string &file) override;
+  protected:
+    ITrade *createTradeFromLine(const std::string &line) const override;
+    int linesToSkip() const override;
 };
 
 #endif // FXTRADELOADER_H

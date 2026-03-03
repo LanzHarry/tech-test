@@ -1,13 +1,12 @@
 #include "BondTradeLoader.h"
+#include "Models/BondTrade.h"
 #include "Utils/utils.h"
 #include <chrono>
 #include <ctime>
-#include <fstream>
 #include <iomanip>
 #include <sstream>
-#include <stdexcept>
 
-BondTrade *BondTradeLoader::createTradeFromLine(const std::string &line) const {
+ITrade *BondTradeLoader::createTradeFromLine(const std::string &line) const {
     std::vector<std::string> items;
     std::stringstream ss(line);
     std::string item;
@@ -37,36 +36,4 @@ BondTrade *BondTradeLoader::createTradeFromLine(const std::string &line) const {
     trade->setRate(std::stod(items[5]));
 
     return trade;
-}
-
-void BondTradeLoader::loadTradesFromFile(const std::string &filename,
-                                         std::vector<ITrade *> &out) const {
-    if (filename.empty()) {
-        throw std::invalid_argument("Filename cannot be null");
-    }
-
-    std::ifstream stream(filename);
-    if (!stream.is_open()) {
-        throw std::runtime_error("Cannot open file: " + filename);
-    }
-
-    std::string line;
-    std::getline(stream, line); // skip first line
-    while (std::getline(stream, line)) {
-        out.push_back(createTradeFromLine(line));
-    }
-}
-
-std::vector<ITrade *> BondTradeLoader::loadTrades() const {
-    std::vector<ITrade *> result;
-    loadTradesFromFile(dataFile_, result);
-    return result;
-}
-
-std::string BondTradeLoader::getDataFile() const {
-    return dataFile_;
-}
-
-void BondTradeLoader::setDataFile(const std::string &file) {
-    dataFile_ = file;
 }

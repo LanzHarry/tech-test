@@ -1,17 +1,18 @@
 #include "FxTradeLoader.h"
 #include <stdexcept>
 
-// NOTE: These methods are only here to allow the solution to compile prior to the test being
-// completed.
+ITrade *FxTradeLoader::createTradeFromLine(const std::string &line) const {
+    std::vector<std::string> items = utils::delimSplit(line, separator);
+    std::stringstream ss(line);
+    std::string item;
 
 std::vector<ITrade *> FxTradeLoader::loadTrades() const {
     throw std::runtime_error("Not implemented");
 }
 
-std::string FxTradeLoader::getDataFile() const {
-    throw std::runtime_error("Not implemented");
+    return trade;
 }
 
-void FxTradeLoader::setDataFile(const std::string &file) {
-    throw std::runtime_error("Not implemented");
+int FxTradeLoader::linesToSkip() const {
+    return 2;
 }

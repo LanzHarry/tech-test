@@ -33,6 +33,8 @@ target_include_directories(Models PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 # Loaders library
 add_library(Loaders
     Loaders/ITradeLoader.h
+    Loaders/BaseTradeLoader.h
+    Loaders/BaseTradeLoader.cpp
     Loaders/BondTradeLoader.h
     Loaders/BondTradeLoader.cpp
     Loaders/FxTradeLoader.h
