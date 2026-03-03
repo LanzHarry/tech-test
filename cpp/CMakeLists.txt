@@ -75,6 +75,14 @@ add_library(RiskSystem
 target_include_directories(RiskSystem PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_link_libraries(RiskSystem Models Loaders Pricers)
 
+add_library(Utils STATIC
+    Utils/utils.cpp
+)
+
+target_include_directories(Utils PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+
+target_link_libraries(Loaders Models Utils)
+
 # Find and link threading library (required for Exercise 8)
 find_package(Threads REQUIRED)
 target_link_libraries(RiskSystem Threads::Threads)
