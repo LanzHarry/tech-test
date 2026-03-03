@@ -24,12 +24,7 @@ ITrade *BondTradeLoader::createTradeFromLine(const std::string &line) const {
     // TODO: replace magic numbers with enum
     BondTrade *trade = new BondTrade(items[6], items[0]);
 
-    std::tm tm = {};
-    std::istringstream dateStream(items[1]);
-    dateStream >> std::get_time(&tm, "%Y-%m-%d");
-    auto timePoint = std::chrono::system_clock::from_time_t(std::mktime(&tm));
-    trade->setTradeDate(timePoint);
-
+    trade->setTradeDate(utils::parseDate(items[1], "%Y-%m-%d"));
     trade->setInstrument(items[2]);
     trade->setCounterparty(items[3]);
     trade->setNotional(std::stod(items[4]));
