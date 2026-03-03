@@ -1,4 +1,5 @@
 #include "BondTradeLoader.h"
+#include "Utils/utils.h"
 #include <chrono>
 #include <ctime>
 #include <fstream>
@@ -12,14 +13,17 @@ BondTrade *BondTradeLoader::createTradeFromLine(const std::string &line) const {
     std::string item;
 
     while (std::getline(ss, item, separator)) {
-        items.push_back(item);
+        items.push_back(utils::trim(item));
     }
 
     if (items.size() < 7) {
         throw std::runtime_error("Invalid line format");
     }
 
-    BondTrade *trade = new BondTrade(items[6]);
+    // BondTrade takes a trade id and a trade type
+    // items[6] is trade id and items[0] is trade type
+    // TODO: replace magic numbers with enum
+    BondTrade *trade = new BondTrade(items[6], items[0]);
 
     std::tm tm = {};
     std::istringstream dateStream(items[1]);
