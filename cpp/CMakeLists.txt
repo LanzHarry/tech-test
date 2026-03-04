@@ -30,6 +30,12 @@ add_library(Models STATIC
 
 target_include_directories(Models PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
+add_library(Utils STATIC
+    Utils/utils.cpp
+)
+
+target_include_directories(Utils PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+
 # Loaders library
 add_library(Loaders
     Loaders/ITradeLoader.h
@@ -42,7 +48,7 @@ add_library(Loaders
 )
 
 target_include_directories(Loaders PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
-target_link_libraries(Loaders Models)
+target_link_libraries(Loaders Models Utils)
 
 # Pricers library
 add_library(Pricers
@@ -62,6 +68,9 @@ add_library(RiskSystem
     RiskSystem/PricingEngineConfig.h
     RiskSystem/PricingConfigLoader.h
     RiskSystem/PricingConfigLoader.cpp
+    RiskSystem/IPricer.h
+    RiskSystem/BasePricer.h
+    RiskSystem/BasePricer.cpp
     RiskSystem/SerialPricer.h
     RiskSystem/SerialPricer.cpp
     RiskSystem/SerialTradeLoader.h
@@ -76,14 +85,6 @@ add_library(RiskSystem
 
 target_include_directories(RiskSystem PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_link_libraries(RiskSystem Models Loaders Pricers)
-
-add_library(Utils STATIC
-    Utils/utils.cpp
-)
-
-target_include_directories(Utils PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
-
-target_link_libraries(Loaders Models Utils)
 
 # Find and link threading library (required for Exercise 8)
 find_package(Threads REQUIRED)
