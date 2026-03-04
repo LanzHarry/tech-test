@@ -2,6 +2,7 @@
 
 void SerialPricer::price(const std::vector<std::vector<ITrade *>> &tradeContainers,
                          IScalarResultReceiver *resultReceiver) {
+    // loadPricers();
     for (const auto &tradeContainer : tradeContainers) {
         for (ITrade *trade : tradeContainer) {
             std::string tradeType = trade->getTradeType();
@@ -11,8 +12,7 @@ void SerialPricer::price(const std::vector<std::vector<ITrade *>> &tradeContaine
                 continue;
             }
 
-            IPricingEngine *pricer = pricers_[tradeType];
-            pricer->price(trade, resultReceiver);
+            pricers_[tradeType]->price(trade, resultReceiver);
         }
     }
 }
