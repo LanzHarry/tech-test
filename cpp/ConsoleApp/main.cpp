@@ -42,13 +42,13 @@ int main(int argc, char *argv[]) {
     // }
 
     ScalarResults results;
-    StreamingTradeLoader streamingLoader;
-    streamingLoader.loadAndPrice(&results);
+    SerialPricer serialPricer;
+    StreamingTradeLoader streamingTradeLoader;
+    streamingTradeLoader.loadAndPrice(serialPricer.getPricers(), &results);
 
-    ScreenResultPrinter screenPrinter;
-    screenPrinter.printResults(results);
+    ScreenResultPrinter::printResults(results);
 
-    std::cout << "Press any key to exit.." << std::endl;
+    std::cout << "Press any key to exit.." << "\n";
     _getch();
 
     return 0;
