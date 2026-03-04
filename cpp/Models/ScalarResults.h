@@ -11,14 +11,14 @@
 
 class ScalarResults : public IScalarResultReceiver {
   public:
-    virtual ~ScalarResults();
+    ~ScalarResults();
     std::optional<ScalarResult> operator[](const std::string &tradeId) const;
 
     bool containsTrade(const std::string &tradeId) const;
 
-    virtual void addResult(const std::string &tradeId, double result) override;
+    void addResult(const std::string &tradeId, double result) override;
 
-    virtual void addError(const std::string &tradeId, const std::string &error) override;
+    void addError(const std::string &tradeId, const std::string &error) override;
 
     class Iterator {
       public:
@@ -28,12 +28,15 @@ class ScalarResults : public IScalarResultReceiver {
         using pointer = ScalarResult *;
         using reference = ScalarResult &;
 
-        Iterator() = default;
+        Iterator(std::vector<ScalarResult>::const_iterator it) : it_(it) {};
 
         // Iterator must be constructable from ScalarResults parent
         Iterator &operator++();
         ScalarResult operator*() const;
         bool operator!=(const Iterator &other) const;
+
+      private:
+        std::vector<ScalarResult>::const_iterator it_;
     };
 
     Iterator begin() const;
@@ -42,6 +45,7 @@ class ScalarResults : public IScalarResultReceiver {
   private:
     std::map<std::string, double> results_;
     std::map<std::string, std::string> errors_;
+    mutable std::vector<ScalarResult> scalarResults_; // lazily constructed by begin
 };
 
 #endif // SCALARRESULTS_H

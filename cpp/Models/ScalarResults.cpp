@@ -1,4 +1,5 @@
 #include "ScalarResults.h"
+#include <set>
 #include <stdexcept>
 
 ScalarResults::~ScalarResults() = default;
@@ -37,21 +38,31 @@ void ScalarResults::addError(const std::string &tradeId, const std::string &erro
 }
 
 ScalarResults::Iterator &ScalarResults::Iterator::operator++() {
-    throw std::runtime_error("Iterator not implemented");
+    ++it_;
+    return *this;
 }
 
 ScalarResult ScalarResults::Iterator::operator*() const {
-    throw std::runtime_error("Iterator not implemented");
+    return *it_;
 }
 
 bool ScalarResults::Iterator::operator!=(const Iterator &other) const {
-    throw std::runtime_error("Iterator not implemented");
+    return it_ != other.it_;
 }
 
 ScalarResults::Iterator ScalarResults::begin() const {
-    throw std::runtime_error("Not implemented");
+    scalarResults_.clear();
+    std::set<std::string> tradeIds;
+    for (const auto &[id, _] : results_)
+        tradeIds.insert(id);
+    for (const auto &[id, _] : errors_)
+        tradeIds.insert(id);
+    for (const auto &tradeId : tradeIds) {
+        scalarResults_.push_back((*this)[tradeId].value());
+    }
+    return Iterator(scalarResults_.begin());
 }
 
 ScalarResults::Iterator ScalarResults::end() const {
-    throw std::runtime_error("Not implemented");
+    return Iterator(scalarResults_.end());
 }
