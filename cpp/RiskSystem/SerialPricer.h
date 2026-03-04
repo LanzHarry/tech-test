@@ -9,6 +9,7 @@
 class SerialPricer : public BasePricer {
   public:
     ~SerialPricer() = default;
+
     void price(const std::vector<std::vector<ITrade *>> &tradeContainers,
                IScalarResultReceiver *resultReceiver) override;
 };

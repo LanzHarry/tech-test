@@ -19,8 +19,18 @@ std::vector<ITradeLoader *> StreamingTradeLoader::getTradeLoaders() {
 void StreamingTradeLoader::loadAndPrice(const std::map<std::string, IPricingEngine *> &pricers,
                                         IScalarResultReceiver *resultReceiver) {
     auto loaders = getTradeLoaders();
+
     for (auto *loader : loaders) {
-        loader->streamTrades(pricers, resultReceiver);
+        loader->streamTrades([&pricers, resultReceiver](ITrade *trade) {
+            auto it = pricers.find(trade->getTradeType());
+            if (it != pricers.end()) {
+                it->second->price(trade, resultReceiver);
+            } else {
+                resultReceiver->addError(trade->getTradeId(),
+                                         "No pricing engine available for trade type: " +
+                                             trade->getTradeType());
+            }
+        });
         delete loader;
     }
 }

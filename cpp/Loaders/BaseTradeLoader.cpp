@@ -2,8 +2,7 @@
 #include <fstream>
 #include <stdexcept>
 
-void BaseTradeLoader::streamTrades(const std::map<std::string, IPricingEngine *> &pricers,
-                                   IScalarResultReceiver *receiver) const {
+void BaseTradeLoader::streamTrades(std::function<void(ITrade *)> onTrade) const {
     std::ifstream stream(dataFile_);
     if (!stream.is_open())
         throw std::runtime_error("Cannot open file: " + dataFile_);
@@ -17,14 +16,7 @@ void BaseTradeLoader::streamTrades(const std::map<std::string, IPricingEngine *>
             continue;
         ITrade *trade = createTradeFromLine(line);
 
-        const std::string tradeType = trade->getTradeType();
-        auto it = pricers.find(tradeType);
-        if (it == pricers.end()) {
-            receiver->addError(trade->getTradeId(),
-                               "No pricing engine available for trade type: " + tradeType);
-        } else {
-            it->second->price(trade, receiver);
-        }
+        onTrade(trade);
         delete trade;
     }
 }
