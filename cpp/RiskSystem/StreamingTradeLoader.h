@@ -11,13 +11,14 @@
 
 class StreamingTradeLoader {
   private:
+    std::map<std::string, std::unique_ptr<IPricingEngine>> enginesByTypeName_;
     std::map<std::string, IPricingEngine *> pricers_;
 
     std::vector<ITradeLoader *> getTradeLoaders();
     void loadPricers();
 
   public:
-    ~StreamingTradeLoader();
+    ~StreamingTradeLoader() = default;
 
     void loadAndPrice(IScalarResultReceiver *resultReceiver);
 };

@@ -20,8 +20,9 @@ std::vector<std::vector<ITrade *>> SerialTradeLoader::loadTrades() {
     auto loaders = getTradeLoaders();
     std::vector<std::vector<ITrade *>> result;
 
-    for (auto loader : loaders) {
+    for (auto *loader : loaders) {
         result.push_back(loader->loadTrades());
+        delete loader;
     }
 
     return result;

@@ -28,12 +28,22 @@ int _getch() {
 #endif
 
 int main(int argc, char *argv[]) {
-    SerialTradeLoader tradeLoader;
-    auto allTrades = tradeLoader.loadTrades();
+    // SerialTradeLoader tradeLoader;
+    // auto allTrades = tradeLoader.loadTrades();
+    //
+    // ScalarResults results;
+    // SerialPricer pricer;
+    // pricer.price(allTrades, &results);
+    //
+    // for (auto &tradeVec : allTrades) {
+    //     for (auto *tradeElt : tradeVec) {
+    //         delete tradeElt;
+    //     }
+    // }
 
     ScalarResults results;
-    SerialPricer pricer;
-    pricer.price(allTrades, &results);
+    StreamingTradeLoader streamingLoader;
+    streamingLoader.loadAndPrice(&results);
 
     ScreenResultPrinter screenPrinter;
     screenPrinter.printResults(results);

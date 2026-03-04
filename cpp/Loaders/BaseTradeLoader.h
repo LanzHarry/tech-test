@@ -1,7 +1,10 @@
 #ifndef BASETRADELOADER_H
 #define BASETRADELOADER_H
 
+#include "../Models/IPricingEngine.h"
+#include "../Models/IScalarResultReceiver.h"
 #include "ITradeLoader.h"
+#include <map>
 #include <string>
 #include <vector>
 
@@ -18,6 +21,8 @@ class BaseTradeLoader : public ITradeLoader {
     }
 
   public:
+    void streamTrades(const std::map<std::string, IPricingEngine *> &pricers,
+                      IScalarResultReceiver *receiver) const override;
     std::vector<ITrade *> loadTrades() const override;
     std::string getDataFile() const override;
     void setDataFile(const std::string &file) override;
