@@ -3,6 +3,7 @@
 
 #include "IPricer.h"
 #include <map>
+#include <memory>
 #include <string>
 
 class BasePricer : public IPricer {
@@ -15,7 +16,7 @@ class BasePricer : public IPricer {
 
   public:
     BasePricer();
-    const std::map<std::string, IPricingEngine *> &getPricers() override {
+    const std::map<std::string, IPricingEngine *> &getPricers() const override {
         return pricers_;
     }
 };

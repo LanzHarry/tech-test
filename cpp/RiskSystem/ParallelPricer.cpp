@@ -1,19 +1,51 @@
 #include "ParallelPricer.h"
-#include <stdexcept>
 
-ParallelPricer::~ParallelPricer() {}
+class ThreadSafeResultReceiver : public IScalarResultReceiver {
+  public:
+    ThreadSafeResultReceiver(IScalarResultReceiver *inner, std::mutex &mutex)
+        : inner_(inner), mutex_(mutex) {}
 
-void ParallelPricer::loadPricers() {
-    PricingConfigLoader pricingConfigLoader;
-    pricingConfigLoader.setConfigFile("./PricingConfig/PricingEngines.xml");
-    PricingEngineConfig pricerConfig = pricingConfigLoader.loadConfig();
-
-    for (const auto &configItem : pricerConfig) {
-        throw std::runtime_error("Not implemented");
+    void addResult(const std::string &tradeId, double result) override {
+        std::lock_guard<std::mutex> lock(mutex_);
+        inner_->addResult(tradeId, result);
     }
-}
+
+    void addError(const std::string &tradeId, const std::string &error) override {
+        std::lock_guard<std::mutex> lock(mutex_);
+        inner_->addError(tradeId, error);
+    }
+
+  private:
+    IScalarResultReceiver *inner_;
+    std::mutex &mutex_;
+};
 
 void ParallelPricer::price(const std::vector<std::vector<ITrade *>> &tradeContainers,
                            IScalarResultReceiver *resultReceiver) {
-    throw std::runtime_error("Not implemented");
+    ThreadSafeResultReceiver safeReceiver(resultReceiver, resultMutex_);
+    std::vector<std::future<void>> futures;
+
+    for (const auto &tradeContainer : tradeContainers) {
+        for (ITrade *trade : tradeContainer) {
+            const std::string &tradeType = trade->getTradeType();
+            auto it = pricers_.find(tradeType);
+
+            if (it == pricers_.end()) {
+                safeReceiver.addError(trade->getTradeId(),
+                                      "No pricing engine available for trade type: " + tradeType);
+                continue;
+            }
+
+            IPricingEngine *pricer = it->second;
+
+            // launch async task and store future
+            futures.push_back(std::async(std::launch::async, [pricer, trade, &safeReceiver]() {
+                pricer->price(trade, &safeReceiver);
+            }));
+        }
+    }
+
+    for (auto &future : futures) {
+        future.get();
+    }
 }

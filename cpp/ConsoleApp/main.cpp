@@ -41,10 +41,23 @@ int main(int argc, char *argv[]) {
     //     }
     // }
 
+    // ScalarResults results;
+    // SerialPricer serialPricer;
+    // StreamingTradeLoader streamingTradeLoader;
+    // streamingTradeLoader.loadAndPrice(serialPricer.getPricers(), &results);
+
+    SerialTradeLoader tradeLoader;
+    auto allTrades = tradeLoader.loadTrades();
+
     ScalarResults results;
-    SerialPricer serialPricer;
-    StreamingTradeLoader streamingTradeLoader;
-    streamingTradeLoader.loadAndPrice(serialPricer.getPricers(), &results);
+    ParallelPricer pricer;
+    pricer.price(allTrades, &results);
+
+    for (auto &tradeVec : allTrades) {
+        for (auto *tradeElt : tradeVec) {
+            delete tradeElt;
+        }
+    }
 
     ScreenResultPrinter::printResults(results);
 

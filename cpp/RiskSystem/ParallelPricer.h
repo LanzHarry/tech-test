@@ -4,6 +4,7 @@
 #include "../Models/IPricingEngine.h"
 #include "../Models/IScalarResultReceiver.h"
 #include "../Models/ITrade.h"
+#include "BasePricer.h"
 #include "PricingConfigLoader.h"
 #include <future>
 #include <map>
@@ -12,18 +13,14 @@
 #include <thread>
 #include <vector>
 
-class ParallelPricer {
+class ParallelPricer : public BasePricer {
   private:
-    std::map<std::string, IPricingEngine *> pricers_;
     std::mutex resultMutex_;
 
-    void loadPricers();
-
   public:
-    ~ParallelPricer();
-
+    ~ParallelPricer() = default;
     void price(const std::vector<std::vector<ITrade *>> &tradeContainers,
-               IScalarResultReceiver *resultReceiver);
+               IScalarResultReceiver *resultReceiver) override;
 };
 
 #endif // PARALLELPRICER_H
