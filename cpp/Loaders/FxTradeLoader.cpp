@@ -17,7 +17,7 @@ ITrade *FxTradeLoader::createTradeFromLine(const std::string &line) const {
 
     // FxTrade takes a trade id and a trade type
     // items[8] is trade id and items[0] is trade type
-    // TODO: replace magic numbers with enum
+    // TODO: replace magic numbers with enum or other constants
     FxTrade *trade = new FxTrade(items[8], items[0]);
 
     trade->setTradeDate(utils::parseDate(items[1], "%Y-%m-%d"));

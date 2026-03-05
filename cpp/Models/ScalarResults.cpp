@@ -31,10 +31,12 @@ bool ScalarResults::containsTrade(const std::string &tradeId) const {
 
 void ScalarResults::addResult(const std::string &tradeId, double result) {
     results_[tradeId] = result;
+    cacheInvalid_ = true;
 }
 
 void ScalarResults::addError(const std::string &tradeId, const std::string &error) {
     errors_[tradeId] = error;
+    cacheInvalid_ = true;
 }
 
 ScalarResults::Iterator &ScalarResults::Iterator::operator++() {
@@ -51,6 +53,18 @@ bool ScalarResults::Iterator::operator!=(const Iterator &other) const {
 }
 
 ScalarResults::Iterator ScalarResults::begin() const {
+    rebuildCacheIfInvalid();
+    return Iterator(scalarResults_.begin());
+}
+
+ScalarResults::Iterator ScalarResults::end() const {
+    rebuildCacheIfInvalid();
+    return Iterator(scalarResults_.end());
+}
+
+void ScalarResults::rebuildCacheIfInvalid() const {
+    if (!cacheInvalid_)
+        return;
     scalarResults_.clear();
     std::set<std::string> tradeIds;
     for (const auto &[id, _] : results_)
@@ -60,9 +74,5 @@ ScalarResults::Iterator ScalarResults::begin() const {
     for (const auto &tradeId : tradeIds) {
         scalarResults_.push_back((*this)[tradeId].value());
     }
-    return Iterator(scalarResults_.begin());
-}
-
-ScalarResults::Iterator ScalarResults::end() const {
-    return Iterator(scalarResults_.end());
+    cacheInvalid_ = false;
 }

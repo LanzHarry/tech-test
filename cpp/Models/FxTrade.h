@@ -12,9 +12,10 @@ class FxTrade : public BaseTrade {
 
     FxTrade(const std::string &tradeId = "", const std::string &tradeType = FxSpotTradeType)
         : tradeType_(tradeType) {
-        if (!tradeId.empty()) {
-            tradeId_ = tradeId;
+        if (tradeId.empty()) {
+            throw std::invalid_argument("A valid non null, non empty trade ID must be provided");
         }
+        tradeId_ = tradeId;
     }
 
     std::string getTradeType() const override {

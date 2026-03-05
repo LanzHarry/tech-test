@@ -39,6 +39,8 @@ void ParallelPricer::price(const std::vector<std::vector<ITrade *>> &tradeContai
             IPricingEngine *pricer = it->second;
 
             // launch async task and store future
+            // a more production grade approach might be N std::thread::hardware_concurrency workers
+            // from a thread pool depending on hardware and number of trades to price
             futures.push_back(std::async(std::launch::async, [pricer, trade, &safeReceiver]() {
                 pricer->price(trade, &safeReceiver);
             }));

@@ -1,4 +1,4 @@
 CompileFlags:
-  Add: [-Wall, -Wextra, -Wpendantic]
+  Add: [-Wall, -Wextra, -Wpedantic]
 Diagnostics:
   ClangTidy: true

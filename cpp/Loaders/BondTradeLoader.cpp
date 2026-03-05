@@ -21,7 +21,7 @@ ITrade *BondTradeLoader::createTradeFromLine(const std::string &line) const {
 
     // BondTrade takes a trade id and a trade type
     // items[6] is trade id and items[0] is trade type
-    // TODO: replace magic numbers with enum
+    // TODO: replace magic numbers with enum or other constants
     BondTrade *trade = new BondTrade(items[6], items[0]);
 
     trade->setTradeDate(utils::parseDate(items[1], "%Y-%m-%d"));

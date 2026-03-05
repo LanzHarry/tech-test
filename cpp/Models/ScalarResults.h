@@ -45,7 +45,10 @@ class ScalarResults : public IScalarResultReceiver {
   private:
     std::map<std::string, double> results_;
     std::map<std::string, std::string> errors_;
-    mutable std::vector<ScalarResult> scalarResults_; // lazily constructed by begin
+    mutable bool cacheInvalid_ = true;
+    mutable std::vector<ScalarResult> scalarResults_;
+
+    void rebuildCacheIfInvalid() const;
 };
 
 #endif // SCALARRESULTS_H

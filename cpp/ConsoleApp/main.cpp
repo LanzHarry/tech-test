@@ -28,6 +28,7 @@ int _getch() {
 #endif
 
 int main(int argc, char *argv[]) {
+    // original serial loader implementation
     // SerialTradeLoader tradeLoader;
     // auto allTrades = tradeLoader.loadTrades();
     //
@@ -41,11 +42,13 @@ int main(int argc, char *argv[]) {
     //     }
     // }
 
+    // streaming load and price implementation
     // ScalarResults results;
     // SerialPricer serialPricer;
     // StreamingTradeLoader streamingTradeLoader;
     // streamingTradeLoader.loadAndPrice(serialPricer.getPricers(), &results);
 
+    // parallel implementation
     SerialTradeLoader tradeLoader;
     auto allTrades = tradeLoader.loadTrades();
 

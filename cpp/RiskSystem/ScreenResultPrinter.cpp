@@ -1,7 +1,7 @@
 #include "ScreenResultPrinter.h"
 #include <iostream>
 
-void ScreenResultPrinter::printResults(ScalarResults &results) {
+void ScreenResultPrinter::printResults(const ScalarResults &results) {
     constexpr const char *sepString = " : ";
     for (const auto &result : results) {
         // Write code here to print out the results such that we have:
